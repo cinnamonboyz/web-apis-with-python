@@ -15,17 +15,23 @@ def index():
     5. If both names are provided: respond with a question, "Is your name <fist-name> <second-name>
     """
 
-    # first_name = request.args.get('first_name')
-    # second_name = request.args.get('second_name')
+    fname = request.args.get( "fname" ) 
+    lname = request.args.get( "lname" )
 
-    # if first_name and second_name:
-    #     response = {"data": f"Is your name {first_name} {second_name}"}
-    # elif first_name:
-    #     response = {"data": f"Hello, {first_name}!"}
-    # elif second_name:
-    #     response = {"data": f"Hello Mr {second_name}!"}
-    # else:
-    #     response = {"status": "error"}
+    if not fname and not lname:
+    # If both first name and last name are missing, return an error 
+        return jsonify({ "status" : "error" })
 
-    response = {"data": "Hello, World!"}
+    elif fname and not lname:
+    # If first name is present but last name is missing 
+        response = { "data" : f"Hello, {fname} !" }
+
+    elif not fname and lname:
+    # If first name is missing but last name is present 
+        response = { "data" : f"Hello, Mr. {lname} !" }
+
+    else :
+    # if none of the above is true, then both names must be present 
+        response = { "data" : f"Is your name {fname} {lname} ?" }
+
     return jsonify(response)
